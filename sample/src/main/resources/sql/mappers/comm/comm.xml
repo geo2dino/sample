@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common.comm">
+
+	<sql id="startPagingSql">
+		SELECT 
+		       CAST(@RNUM := @RNUM - 1 AS signed integer) AS no
+		     , T2.*
+		  FROM (
+				SELECT T1.*
+				  FROM (
+	</sql>
+	<sql id="endPagingSql">
+					       ) T1
+				 LIMIT #{paging.starNum}, #{paging.endNum}
+			   ) T2
+			 , (SELECT @RNUM := (#{paging.totalCount} + 1 ) - (#{paging.page} - 1) * #{paging.pageSize}) T3
+	</sql>
+	
+	<sql id="commCdSelectSql">
+	</sql>
+	
+	<select id="selectCommCd" parameterMap="TbCommCd" resultType="TbCommCd">
+	/* common.comm.selectCommCd */
+		<include refid="commCdSelectSql" />
+	</select>
+	
+	<delete id="deleteCommCd" parameterType="TbCommCd">
+	/* common.comm.deleteCommCd */
+	</delete>
+	
+	<update id="updateCommCd" parameterType="TbCommCd">
+	/* common.comm.updateCommCd */
+	</update>
+	
+	<insert id="insertCommCd" parameterType="TbCommCd">
+	/* common.comm.insertCommCd */
+		<selectKey keyProperty="idx" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+	</insert>
+	
+</mapper>

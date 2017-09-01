@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- GLOBAL_CFG : front 설정 -->
+	<key>value1</key>
+	<test>
+		<key1>value2</key1>
+		<key2>value2</key2>
+	</test>
+</config>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http pattern="/css/**" 	security="none"/>
+	<http pattern="/error/**" 	security="none"/>
+	<http pattern="/images/**" 	security="none"/>
+	<http pattern="/js/**" 		security="none"/>
+
+	<http pattern="/sample/**" auto-config="true">
+		<!-- 크로스 브라우징 방어 -->
+		<csrf/>
+		
+		<intercept-url pattern="/sample/login*" 	access="permitAll"/>
+		<intercept-url pattern="/sample/**" 		access="hasRole('ROLE_USER')"/>
+		<!--
+		<intercept-url pattern="/sample/login**" access="ROLE_USER" requires-channel="https"/>
+		<port-mappings>
+			<port-mapping http="80" https="443"/>
+		</port-mappings>
+		 -->
+		<!-- 
+			authentication-failure-forward-url=""
+			authentication-success-forward-url=""
+			customAuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler
+			customAuthenticationFailureHandler implements org.springframework.security.web.authentication.AuthenticationFailureHandler
+		 -->
+		<form-login login-page="/sample/login"
+					username-parameter="id"
+					password-parameter="pw"
+					default-target-url="/sample/main"
+					login-processing-url="/sample/login_proc"
+					authentication-failure-url="/sample/login_fail"
+					always-use-default-target="true"/>
+		
+		<logout logout-success-url="/sample/login?error=2"
+				logout-url="/sample/logout"
+				invalidate-session="true"
+				delete-cookies="JSESSIONID"/>
+		
+		<session-management invalid-session-url="/sample/logout">
+			<concurrency-control max-sessions="10" error-if-maximum-exceeded="true"/>
+			<!-- 중복 로그인 방지 
+			<concurrency-control max-sessions="1" expired-url="/admin/login_duplicate"/>
+			-->
+		</session-management>		
+	</http>
+
+	<http pattern="/admin/**" auto-config="true">
+		<csrf/>
+		
+		<intercept-url pattern="/admin/index" 	access="permitAll"/>
+		<intercept-url pattern="/admin/login*" 	access="permitAll"/>
+		<intercept-url pattern="/admin/**" 		access="hasRole('ROLE_USER')"/>
+		
+		<form-login login-page="/admin/login"
+					username-parameter="id"
+					password-parameter="pw"
+					default-target-url="/admin/main"
+					login-processing-url="/admin/login_proc"
+					authentication-failure-url="/admin/login_fail"
+					always-use-default-target="true"/>
+		
+		<logout logout-success-url="/admin/login?error=2"
+				logout-url="/admin/logout"
+				invalidate-session="true"
+				delete-cookies="JSESSIONID"/>
+		
+		<session-management invalid-session-url="/admin/logout">
+			<concurrency-control max-sessions="10" error-if-maximum-exceeded="true"/>
+		</session-management>
+	</http>
+
+	<http pattern="/mobile/**" auto-config="true">
+		<csrf/>
+	
+		<intercept-url pattern="/mobile/index"  access="permitAll"/>
+		<intercept-url pattern="/mobile/login*" access="permitAll"/>
+		<intercept-url pattern="/mobile/**" 	access="hasRole('USER')"/>
+		
+		<form-login login-page="/mobile/login"
+					username-parameter="id"
+					password-parameter="pw"
+					default-target-url="/mobile/main"
+					login-processing-url="/mobile/login_proc"
+					authentication-failure-url="/mobile/login_fail"
+					always-use-default-target="true"/>
+					
+		<logout logout-success-url="/mobile/login?error=2"
+				logout-url="/mobile/logout"
+				invalidate-session="true"
+				delete-cookies="JSESSIONID"/>
+		
+		<session-management invalid-session-url="/mobile/logout">
+			<concurrency-control max-sessions="10" error-if-maximum-exceeded="true"/>
+		</session-management>
+	</http>
+
+	<authentication-manager>
+		<authentication-provider ref="customAuthenticationProvider"/>
+	</authentication-manager>
+
+	<beans:bean id="customAuthenticationProvider" class="com.project.sample.fw.auth.CustomAuthenticationProvider"/>
+
+	<context:component-scan base-package="com.project.sample.framwork"/>
+	
+</beans:beans>

@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+html {
+-webkit-touch-callout:none; /*팝업창 차단하기*/
+-webkit-touch-select:none; /*복사막기*/
+-ms-user-select:none; /*텍스트 선택 불가*/
+-moz-user-select:none; /*텍스트 선택 불가*/
+-webkit-user-select:none; /*텍스트 선택 불가*/
+-user-select:none;/*텍스트 선택 불가*/
+-webkit-tap-highlight-color:rgba(0,0,0,0); /*링크를 터치했을때 나오는 기본 영역의 색상을 제어*/
+min-height:100%;
+}
+body{-webkit-text-size-adjust:none;} /*화면 회전시 폰트사이즈 고정*/
+html,body,div,span,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,address,del,em,font,img,ins,strong,tt,var,b,u,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,menu,section,article{margin:0;padding:0;border:none 0;font-family:'Malgun Gothic','맑은 고딕', dotum,'돋움',gulim,'굴림','Apple-Gothic','애플고딕',Droid Sans,Helvetica,Tahoma,sans-serif;}
+body{font-size:16px;background:#666;color:#222;line-height:1;}
+html,body{min-height:100%;min-width:320px} /*height:100%;*/
+select,input,img,li,button{vertical-align:middle;text-align:left}
+form legend,table caption{width:0;height:0;font-size:0;text-indent:-9999px;line-height:0}
+input,button,select,textarea{display:inline-block;box-sizing:border-box;outline:0;margin:0;padding:0;font-family:'Malgun Gothic','맑은 고딕', dotum,'돋움',gulim,'굴림','Apple-Gothic','애플고딕',Droid Sans,Helvetica,Tahoma,sans-serif;font-size:16px;line-height:20px;border:solid 1px #d1d1d1;color:#303030;-webkit-border-radius:0;-webkit-appearance:none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;border-radius:3px }
+img,fieldset,iframe{border:0 none}
+div{border-collapse:collapse}
+table,div{border-spacing:0}
+table{width:100%}
+address,caption,cite,code,dfn,em,var{font-style:normal;font-weight:normal}
+ul,li,ol{list-style-type:none;}
+li,p,dt,dd,div,span{white-space:normal;}
+button{*overflow:visible;padding:0;margin:0;border:0 none;background:transparent;cursor:pointer}
+button::-moz-focus-inner{border:0;padding:0}
+a{text-decoration:none;color:#1d2224}
+label{cursor:pointer;vertical-align:top;}
+img{max-width:100%}
+pre {word-break:break-all;white-space: pre-wrap}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<util:properties id="sysProperty" location="classpath:config/system-property.xml"/>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties">
+			<bean class="org.springmodules.commons.configuration.CommonsConfigurationFactoryBean">
+				<property name="configurations">
+					<list>
+						<ref bean="sysConfig"/>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="sysConfig" class="org.apache.commons.configuration.CompositeConfiguration">
+		<constructor-arg>
+			<list>
+				<bean class="org.apache.commons.configuration.XMLConfiguration">
+					<constructor-arg type="java.lang.String" value="config/system-config.xml"/>
+					<property name="reloadingStrategy" ref="reloadingStrategy"/>
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="reloadingStrategy" class="org.apache.commons.configuration.reloading.FileChangedReloadingStrategy"/>
+				
+</beans>
